@@ -1,14 +1,14 @@
 # Created by Timothy Johnson. Last updated: 03/23/2015
 
 # This script creates a 1km grid that is uniquely numbered. Each 1km grid number keeps the same grid 
-# number as the 5m grid but adds the number 1-100 at the end. For example, 5m cell 
+# number as the 10km grid but adds the number 1-100 at the end. For example, 10km cell 
 # 3869014 has 100 1km2 cells: 3869014001, 3869014002….3869014100. Preparation work is required first, 
 # in the middle of the script, and at the end which is not included below. Everything could be done in R
 # but I found it easier to work in ArcGIS and Stata at times.    
  
-# To start, first project the 5m grid to WGS84. Then clip the 5m grid to a buffer around the country 
+# To start, first project the 10km grid to WGS84. Then clip the 10km grid to a buffer around the country 
 # of interest. The buffer ensures that cells on the border of the country will be included in the clip. 
-# Then, resample the 5m grid so that the X and Y coordinates are the same. Resample to 0.083333, 0.083333.
+# Then, resample the 10km grid so that the X and Y coordinates are the same. Resample to 0.083333, 0.083333.
 # This ensures that the new 1km grid will align properly. Next, resample the new 0.083333 x 0.083333 grid
 # to 1km (0.0083333 x 0.0083333). This grid will be used in the script below.  
 
