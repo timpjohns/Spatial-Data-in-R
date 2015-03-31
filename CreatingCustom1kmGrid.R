@@ -1,8 +1,8 @@
 # Created by Timothy Johnson. Last updated: 03/23/2015
 
-# This script creates a 1km SPAM grid that is uniquely numbered. Each 1km grid number keeps the same grid 
+# This script creates a 1km grid that is uniquely numbered. Each 1km grid number keeps the same grid 
 # number as the 5m grid but adds the number 1-100 at the end. For example, 5m cell 
-# 3869014 has 100 1km2 cells: 3869014001, 3869014002….3869014100. Preparation work is required first, 
+# 3869014 has 100 1km2 cells: 3869014001, 3869014002â€¦.3869014100. Preparation work is required first, 
 # in the middle of the script, and at the end which is not included below. Everything could be done in R
 # but I found it easier to work in ArcGIS and Stata at times.    
  
