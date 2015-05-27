@@ -1,14 +1,19 @@
 # Created by Timothy Johnson. Last updated: 03/23/2015
 
-# This script creates a 1km SPAM grid that is uniquely numbered. Each 1km grid number keeps the same grid 
-# number as the 5m grid but adds the number 1-100 at the end. For example, 5m cell 
-# 3869014 has 100 1km2 cells: 3869014001, 3869014002….3869014100. Preparation work is required first, 
-# in the middle of the script, and at the end which is not included below. Everything could be done in R
-# but I found it easier to work in ArcGIS and Stata at times.    
+# This script creates a 1km grid that is uniquely numbered based on an already exisiting global 10km grid for a country of 
+# interest. The 10km2 grid has a unique number for each cell starting with 00010001 in the upper left 
+# corner of the globe, where the first 0001 is the column number and the second 0001 is the row number. 
+# So moving to the next row down on the same column, the grid number would be 00010002. 
+# A uniquely numbered grid enables the lookup and keeping track of cell data.
+
+# Desired output: Each 1km grid number keeps the same grid number as the 10km grid but adds the number 1-100 at the end. 
+# For example, 10km cell 3869014 has 100 1km2 cells: 3869014001, 3869014002â€¦.3869014100. Where 0001 is in the upper left corner
+# and 100 is in the lower right. Preparation work is required first, in the middle of the script, and at the end 
+# which is not included below. Everything could be done in R but I found it easier to work in ArcGIS and Stata at times.    
  
-# To start, first project the 5m grid to WGS84. Then clip the 5m grid to a buffer around the country 
+# To start, first project the 10km grid to WGS84. Then clip the 10km grid to an approximate 5km2 buffer around the country 
 # of interest. The buffer ensures that cells on the border of the country will be included in the clip. 
-# Then, resample the 5m grid so that the X and Y coordinates are the same. Resample to 0.083333, 0.083333.
+# Then, resample the 10km grid so that the X and Y coordinates are the same. Resample to 0.083333, 0.083333.
 # This ensures that the new 1km grid will align properly. Next, resample the new 0.083333 x 0.083333 grid
 # to 1km (0.0083333 x 0.0083333). This grid will be used in the script below.  
 
@@ -17,7 +22,7 @@ setwd("F:/TimData/SPAM/Ethiopia/New1kmGrid")
 #clear all variables
 rm(list=ls())
 
-#install useful packages (although many not needed) 
+#install useful packages (although many not needed). I find it easier to install any packages I may end up needing.  
 install.packages(c("spatstat","maptools","lattice","sp","RColorBrewer","splancs","maps", "plyr"))
 install.packages(c("rgdal","raster","R.utils","spsurvey", "xlsx", "rJava", "foreign", "stringr"),dep=TRUE)
 
@@ -36,7 +41,7 @@ kmgrid = readGDAL("Ethiopia_1km_spatiallyAlignedSnap2.tif")
 ##convert 1km raster to data frame
 kmgridx= as.data.frame(kmgrid, row.names=NULL, optional=FALSE, xy=FALSE, na.rm=TRUE)
 
-##write 1km grid to stata file so that this data can be sorted (probably could also do in R)
+##write 1km grid to stata file so that this data can be viewed and sorted (Could also just do in R)
 write.dta(kmgridx, "NewSPAMPixels_1kmgrid.dta")
 
 ###Next, open this statafile in stata and sort by all three columns in this order: band1, y, x. This
